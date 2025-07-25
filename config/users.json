@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "username": "alice",
+      "password_hash": "$2b$12$eHMy0g9A7kLz3x2kU4Eq7.Xi9zW5WyjPSH/wCdt5tpoTShBQcP6l2"
+    },
+    {
+      "username": "bob",
+      "password_hash": "$2b$12$aZnO5yrbOiPe.YVjzIhEyu3vpGx4YQdAlYm2m0i2j3u.BH2cPKv2W"
+    },
+    {
+      "username": "john",
+      "password_hash": "$2b$12$dDbAdeSbQot76y0OTGc01O.0WdYWCgyj/ohR0FYIazdTi/1w63pEO"
+    },
+    {
+      "username": "james",
+      "password_hash": "$2b$12$deAxz6YoyF38t2gSc.qBr.FEL5XYuL7isn.OZ6u2pfbsyFWR7lMA2"
+    },
+    {
+      "username": "janet",
+      "password_hash": "$2b$12$0RY0QWXCvHW.GuDF/r/SdehOZvwVUYnGNhwk2IgA.1tCZwxBE1chu"
+    },
+    {
+      "username": "juliet",
+      "password_hash": "$2b$12$XbSCNswDj1E1fpn7QSH1u.mGbd5Z/rE66cXbDKgWkE8jBr0DbEKjm"
+    }
+  ]
+}
