@@ -137,3 +137,11 @@ help                      Show help menu
 - AES decryption failures show a warning if the key is invalid.
 - You may implement WireGuard in `wg0.conf` to create private relay tunnels.
 ---
+
+## Group Members
+
+- Anh Ho
+- Uma Naga Laskshmi Musunuru
+- Gayathri Kodakandla
+- Mannya Muralidhar Acharya
+---
