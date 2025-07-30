@@ -2,9 +2,11 @@
 
 from cryptography.hazmat.primitives.asymmetric import rsa, padding
 from cryptography.hazmat.primitives import serialization, hashes
+from cryptography.exceptions import InvalidSignature
 import os
 
 KEYS_DIR = os.path.expanduser("~/.guardedim")
+
 
 def generate_rsa_keypair(username):
     private_key = rsa.generate_private_key(
@@ -16,7 +18,6 @@ def generate_rsa_keypair(username):
     if not os.path.exists(KEYS_DIR):
         os.makedirs(KEYS_DIR)
 
-    # Save private key locally (PEM format)
     priv_path = os.path.join(KEYS_DIR, f"{username}_private.pem")
     with open(priv_path, "wb") as f:
         f.write(private_key.private_bytes(
@@ -25,7 +26,6 @@ def generate_rsa_keypair(username):
             encryption_algorithm=serialization.NoEncryption()
         ))
 
-    # Return public key PEM
     public_pem = public_key.public_bytes(
         encoding=serialization.Encoding.PEM,
         format=serialization.PublicFormat.SubjectPublicKeyInfo
@@ -43,7 +43,11 @@ def encrypt_with_public_key(public_pem, message):
     public_key = serialization.load_pem_public_key(public_pem.encode())
     ciphertext = public_key.encrypt(
         message.encode(),
-        padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None)
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
     )
     return ciphertext
 
@@ -51,5 +55,36 @@ def encrypt_with_public_key(public_pem, message):
 def decrypt_with_private_key(private_key, ciphertext):
     return private_key.decrypt(
         ciphertext,
-        padding.OAEP(mgf=padding.MGF1(algorithm=hashes.SHA256()), algorithm=hashes.SHA256(), label=None)
+        padding.OAEP(
+            mgf=padding.MGF1(algorithm=hashes.SHA256()),
+            algorithm=hashes.SHA256(),
+            label=None
+        )
     ).decode()
+
+
+def sign_message(private_key, message: str) -> bytes:
+    return private_key.sign(
+        message.encode(),
+        padding.PSS(
+            mgf=padding.MGF1(hashes.SHA256()),
+            salt_length=padding.PSS.MAX_LENGTH
+        ),
+        hashes.SHA256()
+    )
+
+
+def verify_signature(public_key, message: str, signature: bytes) -> bool:
+    try:
+        public_key.verify(
+            signature,
+            message.encode(),
+            padding.PSS(
+                mgf=padding.MGF1(hashes.SHA256()),
+                salt_length=padding.PSS.MAX_LENGTH
+            ),
+            hashes.SHA256()
+        )
+        return True
+    except InvalidSignature:
+        return False

@@ -1,0 +1,52 @@
+# Python artifacts
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.so
+
+# Virtual environments
+venv/
+ENV/
+env/
+.venv/
+
+# Environment variables and secrets
+.env
+
+# TLS keys and certs
+cert.pem
+key.pem
+
+# User private RSA keys (stored in home directory)
+~/.guardedim/
+
+# OS-specific files
+.DS_Store
+Thumbs.db
+
+# Editor-specific
+.vscode/
+.idea/
+
+# Logs
+*.log
+
+# Bytecode cache
+*.pyc
+
+# SQLite database
+db/*.db
+
+# Test output or file uploads
+*.bak
+*.swp
+*.tmp
+*.old
+
+# Files created during runtime (optional)
+config/users.json
+config/public_keys.json
+
+# Optional: ignore all user-generated configs (remove if you want to track these)
+config/*.json
